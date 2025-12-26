@@ -4,16 +4,24 @@ import Image from "next/image";
 import SocialButton from "../components/socialbtn/socialbtn";
 import Lottie from "lottie-react";
 import coffeebrownPink from "../../public/coffeebrownPink.json";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useContext } from "react";
 import { gsap } from "gsap";
 import { coffeeFont } from "@/app/layout";
+import storeContext from "../providers/Themcontext";
 
 export default function WelcomePage() {
   const textRef = useRef<HTMLHeadingElement>(null);
   const lottieRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-const [ImgLoaded, setImgLoaded] = useState(false);
+  const context = useContext(storeContext);
+  if (!context) {
+    throw new Error("useContext must be used within a StoreProvider");
+  }
+
+  const { ImgLoaded ,setImgLoaded} = context;
+
   useEffect(() => {
+    if ( ImgLoaded) {
     // انیمیشن متن خوشامدگویی
     gsap.from(textRef.current, {
       y: -50,
@@ -41,7 +49,8 @@ const [ImgLoaded, setImgLoaded] = useState(false);
       stagger: 0.2,
       ease: "power3.out",
     });
-  }, []);
+  }
+  }, [ImgLoaded]);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-black/80">

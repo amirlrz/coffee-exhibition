@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,7 @@ import Button from "../entrybutton/entrybutton";
 import { coffeeFont } from "@/app/layout";
 import AnimatedHeader from "../animatedHeader/animatedHeader";
 import { gsap } from "gsap";
+import storeContext from "@/app/providers/Themcontext";
 // --------------------------
 // 🔐 Zod Schema Validation
 // --------------------------
@@ -39,7 +40,12 @@ export default function SetEnteryToclassPage() {
   const supabase = createClient();
 
   const [loading, setLoading] = useState(false);
-  const [ImgLoaded, setImgLoaded] = useState(false);
+  const context = useContext(storeContext);
+  if (!context) {
+    throw new Error("useContext must be used within a StoreProvider");
+  }
+
+  const { ImgLoaded, setImgLoaded } = context;
   // ------------------------------------
   // 🎯 React Hook Form + ZodResolver
   // ------------------------------------
@@ -77,14 +83,18 @@ export default function SetEnteryToclassPage() {
   const divRef = useRef(null);
 
   useEffect(() => {
-    gsap.from(divRef.current, {
-      x: 200,        // شروع از راست
-      opacity: 0,    // از شفاف
-      duration: 3,   // مدت زمان انیمیشن
-      ease: "power3.out",
-      delay: 0.8,    // کمی تاخیر برای هماهنگی با سایر انیمیشن‌ها
-    });
-  }, []);
+    if (ImgLoaded && divRef.current){
+      gsap.from(divRef.current, {
+        x: 200,        // شروع از راست
+        opacity: 0,    // از شفاف
+        duration: 3,   // مدت زمان انیمیشن
+        ease: "power3.out",
+        delay: 0.8,    // کمی تاخیر برای هماهنگی با سایر انیمیشن‌ها
+      });
+    }
+    
+  }, [ImgLoaded]);
+  
 
 
   return (

@@ -1,22 +1,33 @@
-'use client'
-
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
 import { coffeeFont } from "@/app/layout";
+import storeContext from "@/app/providers/Themcontext";
+import gsap from "gsap";
+import { useContext, useLayoutEffect, useRef } from "react";
 
 export default function AnimatedHeader() {
-  const headerRef = useRef(null);
+  const headerRef = useRef<HTMLHeadingElement>(null);
+  const context = useContext(storeContext);
+  if (!context) {
+    throw new Error("useContext must be used within a StoreProvider");
+  }
 
-  useEffect(() => {
-    gsap.from(headerRef.current, {
-      y: 50,          // حرکت از پایین
-      opacity: 0,     // از شفاف
-      scale: 0.8,     // کمی کوچک‌تر
-      duration: 1.2,  // مدت زمان
-      ease: "power3.out",
-      delay: 0.2,
-    });
-  }, []);
+  const { ImgLoaded } = context;
+
+  useLayoutEffect(() => {
+    if (!ImgLoaded || !headerRef.current) return;
+
+    gsap.fromTo(
+      headerRef.current,
+      { opacity: 0, y: 50, scale: 0.8 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        //clearProps: "all", 
+      }
+    );
+  }, [ImgLoaded]);
 
   return (
     <h1
@@ -24,12 +35,14 @@ export default function AnimatedHeader() {
       className={`
         ${coffeeFont.className}
         absolute top-3
-        text-3xl 
+        text-3xl
         text-red-700
         tracking-widest
         drop-shadow-[0_0_10px_rgba(185,28,28,0.9)]
         flex items-center justify-center
+        opacity-0
       `}
+      style={{ visibility: ImgLoaded ? "visible" : "hidden" }}
     >
       برشته کاری قهوه گیومه
     </h1>

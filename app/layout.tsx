@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
+import { StoreProvider } from "./providers/Themcontext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({
           antialiased
         `}
       >
+        <StoreProvider>
         {children}
+        </StoreProvider>
       </body>
     </html>
   );
