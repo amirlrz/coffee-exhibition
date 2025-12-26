@@ -1,6 +1,4 @@
-import Image from "next/image";
-import HomePage from "./welcomePage/page";
-import SetEnteryToclassPage from "./components/mainpage/page";
+import SetEnteryToclassPage from "./components/mainpage/mainpage";
 
 export default function Home() {
   return (

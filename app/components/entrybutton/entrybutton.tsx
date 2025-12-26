@@ -3,10 +3,16 @@ import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 
-const Button = () => {
+interface ButtonProps {
+  type?: "button" | "submit" | "reset";
+  loading?: boolean;
+  text: string;
+}
+
+const Button: React.FC<ButtonProps> = ({ type = "button", loading = false, text }) => {
   return (
     <StyledWrapper>
-      <button className="button" type="submit">
+      <button className="button" type={type} disabled={loading}>
         <div>
           <span>
             <Image
@@ -16,7 +22,7 @@ const Button = () => {
               height={24}
               className="logo"
             />
-            ورود
+            {loading ? "در حال پردازش..." : text}
           </span>
         </div>
       </button>

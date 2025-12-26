@@ -11,9 +11,9 @@ import snowsanta from "../../../public/snowsanta.json";
 import toast from "react-hot-toast";
 import { createClient } from "@/lib/supabse/client";
 import Image from "next/image";
-import Button from "../entrybutton/page";
+import Button from "../entrybutton/entrybutton";
 import { coffeeFont } from "@/app/layout";
-import AnimatedHeader from "../animatedHeader/page";
+import AnimatedHeader from "../animatedHeader/animatedHeader";
 import { gsap } from "gsap";
 // --------------------------
 // 🔐 Zod Schema Validation

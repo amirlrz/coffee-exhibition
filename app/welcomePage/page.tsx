@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import SocialButton from "../components/socialbtn/page";
+import SocialButton from "../components/socialbtn/socialbtn";
 import Lottie from "lottie-react";
 import coffeebrownPink from "../../public/coffeebrownPink.json";
 import { useRef, useEffect } from "react";
