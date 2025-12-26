@@ -39,6 +39,7 @@ export default function SetEnteryToclassPage() {
   const supabase = createClient();
 
   const [loading, setLoading] = useState(false);
+  const [ImgLoaded, setImgLoaded] = useState(false);
   // ------------------------------------
   // 🎯 React Hook Form + ZodResolver
   // ------------------------------------
@@ -92,18 +93,21 @@ export default function SetEnteryToclassPage() {
   <Image
     src="/bckg.jpg"
     alt="background"
+    onLoadingComplete={()=>setImgLoaded(true)}
     fill
     className="object-cover brightness-50"
     priority
   />
 {/* SnowSanta Cover */}
+{ImgLoaded && (
+  <>
 <div className="absolute inset-0 z-0 pointer-events-none">
   <Lottie animationData={snowsanta} loop={true} className="w-full h-full object-cover" />
 </div>
 
 
   {/* Overlay تیره */}
-  <div className="absolute inset-0 bg-black/50 backdrop-blur-" />
+  <div className="absolute inset-0 bg-black/50 " />
 
 
 <AnimatedHeader/>
@@ -168,6 +172,8 @@ export default function SetEnteryToclassPage() {
       />
     </form>
   </div>
+  </>
+  )}
 </div>
 
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import SocialButton from "../components/socialbtn/socialbtn";
 import Lottie from "lottie-react";
 import coffeebrownPink from "../../public/coffeebrownPink.json";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { coffeeFont } from "@/app/layout";
 
@@ -12,7 +12,7 @@ export default function WelcomePage() {
   const textRef = useRef<HTMLHeadingElement>(null);
   const lottieRef = useRef<HTMLDivElement>(null);
   const socialRef = useRef<HTMLDivElement>(null);
-
+const [ImgLoaded, setImgLoaded] = useState(false);
   useEffect(() => {
     // انیمیشن متن خوشامدگویی
     gsap.from(textRef.current, {
@@ -50,36 +50,43 @@ export default function WelcomePage() {
         src="/entery1.jpg"
         alt="background"
         fill
+        onLoadingComplete={()=>setImgLoaded(true)}
         className="object-cover brightness-50"
         priority
       />
 
       {/* Overlay تیره */}
       <div className="absolute inset-0 bg-black/60 " />
+{
+  ImgLoaded && (
+    <>
+ {/* Content */}
+ <div className="relative z-10 flex flex-col items-center gap-6 text-center">
+ <h1
+   ref={textRef}
+   className={`${coffeeFont.className} text-2xl md:text-4xl text-red-600 font-bold tracking-widest`}
+ >
+    به خانواده گیومه خوش آمدید
+ </h1>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center gap-6 text-center">
-        <h1
-          ref={textRef}
-          className={`${coffeeFont.className} text-2xl md:text-4xl text-red-600 font-bold tracking-widest`}
-        >
-           به خانواده گیومه خوش آمدید
-        </h1>
+ <p className={`${coffeeFont.className} text-gray-200 text-lg`}>
+   حالا شما هم بخشی از دنیای قهوه ما هستید ☕
+ </p>
 
-        <p className={`${coffeeFont.className} text-gray-200 text-lg`}>
-          حالا شما هم بخشی از دنیای قهوه ما هستید ☕
-        </p>
+ {/* Lottie Animation */}
+ <div ref={lottieRef} className="w-72 h-72">
+   <Lottie animationData={coffeebrownPink} loop={true} />
+ </div>
 
-        {/* Lottie Animation */}
-        <div ref={lottieRef} className="w-72 h-72">
-          <Lottie animationData={coffeebrownPink} loop={true} />
-        </div>
-
-        {/* Social Buttons */}
-        <div ref={socialRef}>
-          <SocialButton />
-        </div>
-      </div>
+ {/* Social Buttons */}
+ <div ref={socialRef}>
+   <SocialButton />
+ </div>
+</div>
+</>
+  )
+}
+     
     </div>
   );
 }
