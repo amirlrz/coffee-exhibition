@@ -126,7 +126,7 @@ export default function SetEnteryToclassPage() {
     >
       <span className={`${coffeeFont.className}`}>همراه خانواده گیومه شو</span>
       <Image
-        src="/logo2.png"
+        src="/logo2.PNG"
         alt="logo"
         width={96}
         height={96}
